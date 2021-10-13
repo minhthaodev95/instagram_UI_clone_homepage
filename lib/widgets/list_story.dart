@@ -9,46 +9,45 @@ class ListStory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 10),
-      height: 100.0,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: [
-          SizedBox(
-            width: 100,
-            height: 100.0,
-            child: Center(
-              child: Stack(
-                children: [
-                  Column(
-                    children: const [
-                      SizedBox(
-                        child: CircleAvatar(
-                          radius: 35.0,
-                          backgroundImage: NetworkImage(
-                              'https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg'),
+        margin: const EdgeInsets.only(top: 10),
+        height: 100.0,
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (ctx, i) {
+              if (i == 0) {
+                return SizedBox(
+                  width: 80,
+                  height: 100.0,
+                  child: Center(
+                    child: Stack(
+                      children: [
+                        Column(
+                          children: const [
+                            SizedBox(
+                              child: CircleAvatar(
+                                radius: 37.0,
+                                backgroundImage: NetworkImage(
+                                    'https://www.rd.com/wp-content/uploads/2017/09/01-shutterstock_476340928-Irina-Bg-1024x683.jpg'),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text('Your Story')
+                          ],
                         ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text('Your Story')
-                    ],
+                        const Positioned(
+                          bottom: 25,
+                          right: 0,
+                          child: Icon(Icons.add_a_photo_outlined),
+                        )
+                      ],
+                    ),
                   ),
-                  const Positioned(
-                    bottom: 25,
-                    right: 0,
-                    child: Icon(Icons.add_a_photo_outlined),
-                  )
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (ctx, i) {
+                );
+              } else {
                 return Container(
                   margin: const EdgeInsets.only(left: 15),
                   width: 80,
@@ -61,7 +60,7 @@ class ListStory extends StatelessWidget {
                           backgroundColor: Colors.white,
                           child: CircleAvatar(
                             radius: 35.0,
-                            backgroundImage: AssetImage(users[i].avatar),
+                            backgroundImage: AssetImage(users[i - 1].avatar),
                           ),
                         ),
                         decoration: BoxDecoration(
@@ -73,16 +72,14 @@ class ListStory extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 5),
-                      Text(users[i].nickname)
+                      Text(users[i - 1].nickname)
                     ],
                   ),
                 );
-              },
-              itemCount: users.length,
-            ),
-          )
-        ],
-      ),
-    );
+              }
+            },
+            itemCount: users.length,
+          ),
+        ));
   }
 }
